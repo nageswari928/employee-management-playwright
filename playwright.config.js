@@ -31,7 +31,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
-    baseURL: process.env.BASE_URL ,
+    baseURL: process.env.BASE_URL || 'http://localhost:8000',
 
     // Show the browser while learning
     headless: false,
