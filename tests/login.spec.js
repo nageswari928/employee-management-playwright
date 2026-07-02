@@ -13,79 +13,79 @@ test.beforeEach(async ({ page }) => {
 
 });
 
-// test('TC001 - Valid Login', async ({ page }) => {
+test('TC001 - Valid Login', async ({ page }) => {
 
-//     await loginPage.login(
-//         loginData.validUser.employeeId,
-//         loginData.validUser.password
-//     );
+    await loginPage.login(
+        loginData.validUser.employeeId,
+        loginData.validUser.password
+    );
 
-//     await expect(
-//       page.getByTestId("dashboard")
-//     ).toBeVisible();
-// });
+    await expect(
+      page.getByTestId("dashboard")
+    ).toBeVisible();
+});
 
-// test('TC002 - Invalid Password', async () => {
+test('TC002 - Invalid Password', async () => {
 
-//     await loginPage.login(
-//         loginData.invalidPassword.employeeId,
-//         loginData.invalidPassword.password
-//     );
+    await loginPage.login(
+        loginData.invalidPassword.employeeId,
+        loginData.invalidPassword.password
+    );
 
-//     await expect(loginPage.loginMessage)
-//         .toContainText(
-//             'Invalid Employee ID or Password'
-//         );
+    await expect(loginPage.loginMessage)
+        .toContainText(
+            'Invalid Employee ID or Password'
+        );
 
-// });
+});
 
-// test('TC003 - Invalid Employee ID', async () => {
+test('TC003 - Invalid Employee ID', async () => {
 
-//     await loginPage.login(
-//         loginData.invalidEmployee.employeeId,
-//         loginData.invalidEmployee.password
-//     );
-// });
+    await loginPage.login(
+        loginData.invalidEmployee.employeeId,
+        loginData.invalidEmployee.password
+    );
+});
 
-// test('TC004 - emptyEmployee', async () => {
+test('TC004 - emptyEmployee', async () => {
 
-//     await loginPage.login(
-//         loginData.emptyEmployee.employeeId,
-//         loginData.emptyEmployee.password
-//     );
-// });
+    await loginPage.login(
+        loginData.emptyEmployee.employeeId,
+        loginData.emptyEmployee.password
+    );
+});
 
-// test('TC005 - emptyPassword', async () => {
+test('TC005 - emptyPassword', async () => {
     
-//     await loginPage.login(
-//         loginData.emptyPassword.employeeId,
-//         loginData.emptyPassword.password
-//     );
+    await loginPage.login(
+        loginData.emptyPassword.employeeId,
+        loginData.emptyPassword.password
+    );
     
-// });
+});
 
-// test('TC006 - emptyFields', async () => {
-//     await loginPage.login(
-//         loginData.emptyFields.employeeId,
-//         loginData.emptyFields.password
-//     );
-// });
+test('TC006 - emptyFields', async () => {
+    await loginPage.login(
+        loginData.emptyFields.employeeId,
+        loginData.emptyFields.password
+    );
+});
 
-// test('TC007 - Reset Form', async ({ loginPage }) => {
+test('TC007 - Reset Form', async ({ loginPage }) => {
 
-//     await loginPage.employeeId.fill("EMP001");
+    await loginPage.employeeId.fill("EMP001");
 
-//     await loginPage.password.fill("Password123");
+    await loginPage.password.fill("Password123");
 
-//     await loginPage.reset();
+    await loginPage.reset();
 
-//     await expect(loginPage.employeeId)
-//         .toHaveValue("");
+    await expect(loginPage.employeeId)
+        .toHaveValue("");
 
-//     await expect(loginPage.password)
-//         .toHaveValue("");
+    await expect(loginPage.password)
+        .toHaveValue("");
 
-// });
+});
 
 test('TC008 - Show Password', async ({ loginPage }) => {
 
