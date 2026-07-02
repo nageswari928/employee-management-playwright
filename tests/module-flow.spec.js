@@ -51,7 +51,9 @@ test('TC017 - Employees department filter changes results', async ({ page }) => 
   const employeesPage = new EmployeesPage(page);
   await employeesPage.open();
   await employeesPage.filterByDepartment('Engineering');
-  await expect(page.getByTestId('employee-table')).toBeVisible();
+  await expect(
+    employeesPage.employeeTable
+   ).toContainText("Engineering");
 });
 
 test('TC018 - Employees status filter changes results', async ({ page }) => {
@@ -59,7 +61,9 @@ test('TC018 - Employees status filter changes results', async ({ page }) => {
   const employeesPage = new EmployeesPage(page);
   await employeesPage.open();
   await employeesPage.filterByStatus('Active');
-  await expect(page.getByText('Active')).toBeVisible();
+  await expect(
+    employeesPage.employeeTable
+  ).toContainText("Active");
 });
 
 test('TC019 - Employees sort select is functional', async ({ page }) => {
