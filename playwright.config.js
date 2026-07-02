@@ -34,7 +34,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL || 'http://localhost:8000',
 
     // Show the browser while learning
-    headless: false,
+    headless: true,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -44,14 +44,14 @@ export default defineConfig({
   },
 
   /* Configure projects for major browsers */
-  projects: [
+  projects: [  
     {
-      name: 'Microsoft Edge',
+      name: 'chromium',
       use: {
-        ...devices['Desktop Edge'],
-        channel: 'msedge'
+        ...devices['Desktop Chrome']
       },
     },
+
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
