@@ -6,6 +6,12 @@ const nycOutputDir = path.resolve(__dirname, '../.nyc_output');
 const coverageDir = path.resolve(__dirname, '../coverage/tests');
 const tempDir = path.resolve(__dirname, '../.nyc_tmp');
 
+let portalPath = path.resolve(__dirname, '../../employee-management-portal');
+if (!fs.existsSync(portalPath)) {
+  portalPath = path.resolve(__dirname, '../..');
+}
+const cleanPortalPath = portalPath.replace(/\\/g, '/');
+
 // Clean and create target folders
 if (fs.existsSync(coverageDir)) {
   fs.rmSync(coverageDir, { recursive: true, force: true });
@@ -52,7 +58,7 @@ files.forEach((file, index) => {
     const cleanReportOutput = reportOutput.replace(/\\/g, '/');
     // Run nyc report specifically for this file (cross-platform absolute paths)
     execSync(
-      `npx nyc report --cwd ../employee-management-portal --temp-dir "${cleanTempDir}" --reporter=html --report-dir "${cleanReportOutput}"`,
+      `npx nyc report --cwd "${cleanPortalPath}" --temp-dir "${cleanTempDir}" --reporter=html --report-dir "${cleanReportOutput}"`,
       { stdio: 'ignore' }
     );
     testReports.push({ name: cleanTestName, path: `./${testName}/index.html` });
