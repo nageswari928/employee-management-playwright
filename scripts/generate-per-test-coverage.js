@@ -48,9 +48,11 @@ files.forEach((file, index) => {
   const reportOutput = path.join(coverageDir, testName);
 
   try {
-    // Run nyc report specifically for this file
+    const cleanTempDir = tempDir.replace(/\\/g, '/');
+    const cleanReportOutput = reportOutput.replace(/\\/g, '/');
+    // Run nyc report specifically for this file (cross-platform absolute paths)
     execSync(
-      `cd ../employee-management-portal && ..\\employee-management-playwright\\node_modules\\.bin\\nyc report --temp-dir ..\\employee-management-playwright\\.nyc_tmp --reporter=html --report-dir ..\\employee-management-playwright\\coverage\\tests\\${testName}`,
+      `npx nyc report --cwd ../employee-management-portal --temp-dir "${cleanTempDir}" --reporter=html --report-dir "${cleanReportOutput}"`,
       { stdio: 'ignore' }
     );
     testReports.push({ name: cleanTestName, path: `./${testName}/index.html` });
