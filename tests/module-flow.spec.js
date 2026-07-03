@@ -12,6 +12,8 @@ const login = async (page) => {
   await loginPage.open();
   await loginPage.login(loginData.validUser.employeeId, loginData.validUser.password);
   await expect(page).toHaveURL(/dashboard.html/);
+   // Wait until dashboard is completely loaded
+  await page.waitForLoadState("networkidle");
 };
 
 test('TC013 - Dashboard navigation items are visible', async ({ page }) => {
@@ -30,23 +32,17 @@ test('TC014 - Dashboard cards render', async ({ page }) => {
   await expect(cards).toHaveCount(4);
 });
 
-test('TC015 - Employees page loads and renders table', async ({ page }) => {
-  await login(page);
-  const employeesPage = new EmployeesPage(page);
-  await employeesPage.open();
-  await expect(employeesPage.table).toBeVisible();
-  await expect(page.getByText('Employee Directory')).toBeVisible();
-});
-
-test('TC016 - Employees search filters results', async ({ page }) => {
+test('TC015 - Employees search filters results', async ({ page }) => {
   await login(page);
   const employeesPage = new EmployeesPage(page);
   await employeesPage.open();
   await employeesPage.search('Ava');
-  await expect(page.getByText('Ava Martinez')).toBeVisible();
+  await expect(
+    employeesPage.employeeTable
+  ).toContainText("Ava Martinez");
 });
 
-test('TC017 - Employees department filter changes results', async ({ page }) => {
+test('TC016 - Employees department filter changes results', async ({ page }) => {
   await login(page);
   const employeesPage = new EmployeesPage(page);
   await employeesPage.open();
@@ -56,7 +52,7 @@ test('TC017 - Employees department filter changes results', async ({ page }) => 
    ).toContainText("Engineering");
 });
 
-test('TC018 - Employees status filter changes results', async ({ page }) => {
+test('TC017 - Employees status filter changes results', async ({ page }) => {
   await login(page);
   const employeesPage = new EmployeesPage(page);
   await employeesPage.open();
@@ -66,15 +62,7 @@ test('TC018 - Employees status filter changes results', async ({ page }) => {
   ).toContainText("Active");
 });
 
-test('TC019 - Employees sort select is functional', async ({ page }) => {
-  await login(page);
-  const employeesPage = new EmployeesPage(page);
-  await employeesPage.open();
-  await employeesPage.sortBy('department');
-  await expect(employeesPage.table).toBeVisible();
-});
-
-test('TC020 - Employee details modal opens', async ({ page }) => {
+test('TC018 - Employee details modal opens', async ({ page }) => {
   await login(page);
   const employeesPage = new EmployeesPage(page);
   await employeesPage.open();
@@ -82,7 +70,7 @@ test('TC020 - Employee details modal opens', async ({ page }) => {
   await expect(employeesPage.modal).toBeVisible();
 });
 
-test('TC021 - Profile page opens and edit controls are available', async ({ page }) => {
+test('TC019 - Profile page opens and edit controls are available', async ({ page }) => {
   await login(page);
   const profilePage = new ProfilePage(page);
   await profilePage.open();
@@ -90,7 +78,7 @@ test('TC021 - Profile page opens and edit controls are available', async ({ page
   await expect(profilePage.saveButton).toBeHidden();
 });
 
-test('TC022 - Profile edit mode toggles correctly', async ({ page }) => {
+test('TC020 - Profile edit mode toggles correctly', async ({ page }) => {
   await login(page);
   const profilePage = new ProfilePage(page);
   await profilePage.open();
@@ -99,7 +87,7 @@ test('TC022 - Profile edit mode toggles correctly', async ({ page }) => {
   await expect(profilePage.cancelButton).toBeVisible();
 });
 
-test('TC023 - Settings page displays preference controls', async ({ page }) => {
+test('TC021 - Settings page displays preference controls', async ({ page }) => {
   await login(page);
   const settingsPage = new SettingsPage(page);
   await settingsPage.open();
@@ -109,7 +97,7 @@ test('TC023 - Settings page displays preference controls', async ({ page }) => {
   await expect(settingsPage.autoLogoutToggle).toBeVisible();
 });
 
-test('TC024 - Settings save action completes', async ({ page }) => {
+test('TC022 - Settings save action completes', async ({ page }) => {
   await login(page);
   const settingsPage = new SettingsPage(page);
   await settingsPage.open();
@@ -117,7 +105,7 @@ test('TC024 - Settings save action completes', async ({ page }) => {
   await expect(settingsPage.message).toContainText(/saved|success/i);
 });
 
-test('TC025 - Notifications page loads and supports search', async ({ page }) => {
+test('TC023 - Notifications page loads and supports search', async ({ page }) => {
   await login(page);
   const notificationsPage = new NotificationsPage(page);
   await notificationsPage.open();

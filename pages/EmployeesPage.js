@@ -5,13 +5,14 @@ export class EmployeesPage {
     this.departmentFilter = page.getByTestId('department-filter');
     this.statusFilter = page.getByTestId('status-filter');
     this.sortSelect = page.getByTestId('sort-select');
-    this.table = page.locator('#employeeTable');
+    this.employeeTable = page.locator('#employeeTable').locator('table');
     this.modal = page.locator('#employeeModal');
     this.closeModalButton = page.getByTestId('close-employee-modal');
   }
 
   async open() {
     await this.page.goto('/employees.html');
+    await this.page.waitForLoadState("networkidle");
   }
 
   async search(value) {
