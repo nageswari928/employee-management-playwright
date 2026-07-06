@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "test:local": "npx playwright test & python scripts/upload_test_results.py & python ../employee-management-portal/scripts/log_build_metadata.py",
     "allure:generate": "allure generate allure-results --clean -o allure-report",
     "allure:open": "allure open allure-report",
     "coverage:per-test": "node scripts/generate-per-test-coverage.js",
